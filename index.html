@@ -2,9 +2,10 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>jQuery</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>jQuery</title>
     <link rel="stylesheet" type="text/css" href="css/table.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="js/jquery-ui-1.12.1.custom/jquery-ui.min.css">
 </head>
 <body>
 	<table id="schedule">
@@ -12,7 +13,7 @@
             <tr class="uaHead hide">
                 <th>Номер потягу</th>
                 <th>Маршрут</th>
-                <th class="{sorter: false}">День тижня</th>
+                <th class="{sorter-false}">День тижня</th>
                 <th>Відправлення</th>
                 <th>Прибуття</th>
                 <th>Вартість, грн</th>
@@ -20,7 +21,7 @@
             <tr class="enHead hide">
                 <th>Train number</th>
                 <th>Route</th>
-                <th class="{sorter: false}">Week day</th>
+                <th class="{sorter-false}">Week day</th>
                 <th>Dispatch</th>
                 <th>Arrival</th>
                 <th>Ticket price, hrn</th>
@@ -29,10 +30,14 @@
         <tbody></tbody>
     </table>
     <!--<button id="lang">En/Ua</button>-->
-    <div class="search"><button id="start_srch">Пошук (search) :</button><input id="search" /></div>
+    <div class="search">
+        <button id="search"> Пошук (search) :</button>
+        <input id="datepicker" />        
+    </div>
     <script src="js/jquery-3.4.1.min.js"></script> 
     <script src="js/train.js"></script>    
     <script src="js/jquery.tablesorter.min.js"></script>
+    <script src="js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
     <script src="js/index.js"></script> 
 </body>
 </html>

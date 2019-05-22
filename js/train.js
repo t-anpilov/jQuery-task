@@ -12,8 +12,9 @@ var htmlUaOutput = function(item) {
         $('tbody:first > tr:last > td').eq(0).html(item.trainNumber);
         $('tbody:first > tr:last > td').eq(1).html(item.startPoint.cityNameUa + ' - ' + item.destinationPoint.cityNameUa);
         $('tbody:first > tr:last > td').eq(2).html(item.startDay.uaText);
-        $('tbody:first > tr:last > td').eq(3).html(getDateUa(item.startDay.id, item.startHour, item.startMin));        
-        $('tbody:first > tr:last > td').eq(4).html(getDateUa(item.finishDay.id, item.finishHour, item.finishMin));
+        $('tbody:first > tr:last > td').eq(3).html(getDate(item.startDay.id, item.startHour, item.startMin));
+              
+        $('tbody:first > tr:last > td').eq(4).html(getDate(item.finishDay.id, item.finishHour, item.finishMin));
         $('tbody:first > tr:last > td').eq(5).html(item.price);   
 }
 
@@ -27,12 +28,12 @@ var htmlEnOutput = function(item) {
     $('tbody:first > tr:last > td').eq(0).html(item.trainNumber);
     $('tbody:first > tr:last > td').eq(1).html(item.startPoint.cityNameEn + ' - ' + item.destinationPoint.cityNameEn);
     $('tbody:first > tr:last > td').eq(2).html(item.startDay.enText);
-    $('tbody:first > tr:last > td').eq(3).html(getDateEn(item.startDay.id, item.startHour, item.startMin));        
-    $('tbody:first > tr:last > td').eq(4).html(getDateEn(item.finishDay.id, item.finishHour, item.finishMin));
+    $('tbody:first > tr:last > td').eq(3).html(getDate(item.startDay.id, item.startHour, item.startMin));        
+    $('tbody:first > tr:last > td').eq(4).html(getDate(item.finishDay.id, item.finishHour, item.finishMin));
     $('tbody:first > tr:last > td').eq(5).html(item.price);   
 } 
 
-function getDateUa(id, hour, min) {
+function getDate(id, hour, min) {
     var today = new Date();
     var ourDay = today.getDay();
     if (ourDay < id) {
@@ -41,37 +42,38 @@ function getDateUa(id, hour, min) {
         var next = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hour, min);
     } else {
         var next = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7-(ourDay-id)), hour, min);
-    }    
-    var formatter = new Intl.DateTimeFormat("uk-UA", {
-        month: "long",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-    });
-    return formatter.format(next);
+    }
+    if (!$('.uaHead:first').hasClass('hide')) {
+        var result = formatDateUa(next);
+     } else if (!$('.enHead:first').hasClass('hide')) { 
+        var result = formatDateEn(next);
+    } return result;       
 }
 
-function getDateEn(id, hour, min) {
-    var today = new Date();
-    var ourDay = today.getDay();
-    if (ourDay < id) {
-        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(id-ourDay), hour, min); 
-    } else if (ourDay == id) {
-        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hour, min);
-    } else {
-        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7-(ourDay-id)), hour, min);
-    }    
+function getInputDate() {
+    var str = $('#datepicker').val();
+    var somedate = new Date (str.slice(6), (+str.slice(0, 2)-1), str.slice(3, 5));
+    return somedate;
+}
+
+function formatDateEn(date) {
     var formatter = new Intl.DateTimeFormat("en-US", {
         month: "long",
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
     });
-    return formatter.format(next);
+    return formatter.format(date);    
 }
-
-
-
+function formatDateUa(date) {
+    var formatter = new Intl.DateTimeFormat("uk-UA", {
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
+    return formatter.format(date);    
+}
 
 var chooseLang = confirm('Show schedule in English?');
 
@@ -79,30 +81,28 @@ if (chooseLang === false) {
     for (var i=0; i<schedule.length; i++) {
         htmlUaOutput(schedule[i]);
     }
-    //$('#lang').on('click', enLang);
+    
 } else {
     for (var i=0; i<schedule.length; i++) {
         htmlEnOutput(schedule[i]);
-    }
-    //$('#lang').on('click', uaLang);
+    }    
 }
 
-/*function uaLang() {
-    $('.enHead:first').addClass('hide');
-    $('tbody:first > tr').remove();
-    for (var i=0; i<schedule.length; i++) {
-        htmlUaOutput(schedule[i]);
-    }
-    $('#lang').off('click', uaLang);
-    $('#lang').on('click', enLang);
-}
+$('#search').on('click', searching);
 
-function enLang() {
-    $('.uaHead:first').addClass('hide');
-    $('tbody:first > tr').remove();
-    for (var i=0; i<schedule.length; i++) {
-        htmlEnOutput(schedule[i]);
+function searching() {
+    $('tbody:first > tr').removeClass('light');
+    var ask = getInputDate();
+    var uaDate =  formatDateUa(ask).slice(0, -7);
+    var enDate = formatDateEn(ask); 
+    var coma = enDate.indexOf(',');  
+    enDate = enDate.slice(0, coma);
+    for (var i=0; i<$('tbody:first > tr').length; i++) {
+        var html = $('tbody:first > tr').eq(i).children().eq(3).html();
+        var co = html.indexOf(',');
+        if ( html.slice(0, -7) == uaDate || html.slice(0, co) == enDate ) {
+            console.log('!');
+            $('tbody:first > tr').eq(i).addClass('light');
+        }
     }
-    $('#lang').off('click', enLang);
-    $('#lang').on('click', uaLang);
-}*/
+}

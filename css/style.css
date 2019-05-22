@@ -22,7 +22,9 @@ span {
     cursor: pointer;
 }
 .light {
-    background-color: khaki;
+    color: red;
+    font-weight: 600;
+    font-size: 1.1em;
 }
 .search {
     margin: 10px;
