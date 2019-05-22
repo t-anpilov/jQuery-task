@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<table id="schedule">
+        <thead>
+            <tr class="uaHead hide">
+                <th>Номер потягу</th>
+                <th>Маршрут</th>
+                <th>День тижня </th>
+                <th>Відправлення</th>
+                <th>Прибуття</th>
+                <th>Вартість, грн</th>
+            </tr>
+            <tr class="enHead hide">
+                <th>Train number</th>
+                <th>Route</th>
+                <th>Week day</th>
+                <th>Dispatch</th>
+                <th>Arrival</th>
+                <th>Ticket price, hrn</th>
+            </tr>                
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button id="lang">En/Ua</button>
+    <div class="search"><button id="start_srch">Пошук (search) :</button><input id="search" /></div>
+    <script src="js/jquery-3.4.1.min.js"></script> 
+    <script src="js/train.js"></script>    
+    <script src="js/jquery.tablesorter.min.js"></script>
+    <script src="js/index.js"></script> 
+</body>
+</html>
