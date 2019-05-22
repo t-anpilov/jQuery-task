@@ -30,3 +30,20 @@ span {
     margin: 10px;
     text-align: center;
 }
+.tooltip, .tooltip_sp {
+    position:absolute;
+    z-index:999;
+    left:-9999px;
+    background-color:#cccccc;
+    padding:5px;
+    border:1px solid rgb(109, 109, 109);
+    width:180px;
+    border-radius: 5px;
+}
+
+.tooltip p {
+    margin:0;
+    padding:0;
+    color:rgb(49, 49, 49);
+    padding:2px 7px;
+}

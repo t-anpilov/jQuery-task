@@ -9,6 +9,8 @@ var htmlUaOutput = function(item) {
             $('tbody:first > tr:last').append('<td></td>');
         }
         
+        if (parseInt(item.trainNumber)<500) { $('tbody:first > tr:last > td').eq(0).addClass('Звичайний');
+        } else { $('tbody:first > tr:last > td').eq(0).addClass('Фiрмовий'); }
         $('tbody:first > tr:last > td').eq(0).html(item.trainNumber);
         $('tbody:first > tr:last > td').eq(1).html(item.startPoint.cityNameUa + ' - ' + item.destinationPoint.cityNameUa);
         $('tbody:first > tr:last > td').eq(2).html(item.startDay.uaText);
@@ -25,6 +27,8 @@ var htmlEnOutput = function(item) {
         $('tbody:first > tr:last').append('<td></td>');
     } 
 
+    if (parseInt(item.trainNumber)<500) { $('tbody:first > tr:last > td').eq(0).addClass('Ordinary');
+    } else { $('tbody:first > tr:last > td').eq(0).addClass('Special'); }
     $('tbody:first > tr:last > td').eq(0).html(item.trainNumber);
     $('tbody:first > tr:last > td').eq(1).html(item.startPoint.cityNameEn + ' - ' + item.destinationPoint.cityNameEn);
     $('tbody:first > tr:last > td').eq(2).html(item.startDay.enText);
