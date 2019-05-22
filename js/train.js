@@ -12,10 +12,8 @@ var htmlUaOutput = function(item) {
         $('tbody:first > tr:last > td').eq(0).html(item.trainNumber);
         $('tbody:first > tr:last > td').eq(1).html(item.startPoint.cityNameUa + ' - ' + item.destinationPoint.cityNameUa);
         $('tbody:first > tr:last > td').eq(2).html(item.startDay.uaText);
-        $('tbody:first > tr:last > td').eq(3).html(item.add.uaText + ' - ' + item.startHour + ' : ' + item.startMin);
-        $('tbody:first > tr:last > td').eq(3).attr('data-day', item.startDay.id); 
-        $('tbody:first > tr:last > td').eq(4).html(item.addEnd.uaText + ' - ' + item.finishHour + ' : ' + item.finishMin);
-        $('tbody:first > tr:last > td').eq(4).attr('data-day', item.finishDay.id);
+        $('tbody:first > tr:last > td').eq(3).html(getDateUa(item.startDay.id, item.startHour, item.startMin));        
+        $('tbody:first > tr:last > td').eq(4).html(getDateUa(item.finishDay.id, item.finishHour, item.finishMin));
         $('tbody:first > tr:last > td').eq(5).html(item.price);   
 }
 
@@ -29,12 +27,51 @@ var htmlEnOutput = function(item) {
     $('tbody:first > tr:last > td').eq(0).html(item.trainNumber);
     $('tbody:first > tr:last > td').eq(1).html(item.startPoint.cityNameEn + ' - ' + item.destinationPoint.cityNameEn);
     $('tbody:first > tr:last > td').eq(2).html(item.startDay.enText);
-    $('tbody:first > tr:last > td').eq(3).html(item.add.enText + ' - ' + item.startHour + ' : ' + item.startMin);
-    $('tbody:first > tr:last > td').eq(3).attr('data-day', item.startDay.id); 
-    $('tbody:first > tr:last > td').eq(4).html(item.addEnd.enText + ' - ' + item.finishHour + ' : ' + item.finishMin);
-    $('tbody:first > tr:last > td').eq(4).attr('data-day', item.finishDay.id);
+    $('tbody:first > tr:last > td').eq(3).html(getDateEn(item.startDay.id, item.startHour, item.startMin));        
+    $('tbody:first > tr:last > td').eq(4).html(getDateEn(item.finishDay.id, item.finishHour, item.finishMin));
     $('tbody:first > tr:last > td').eq(5).html(item.price);   
 } 
+
+function getDateUa(id, hour, min) {
+    var today = new Date();
+    var ourDay = today.getDay();
+    if (ourDay < id) {
+        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(id-ourDay), hour, min); 
+    } else if (ourDay == id) {
+        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hour, min);
+    } else {
+        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7-(ourDay-id)), hour, min);
+    }    
+    var formatter = new Intl.DateTimeFormat("uk-UA", {
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
+    return formatter.format(next);
+}
+
+function getDateEn(id, hour, min) {
+    var today = new Date();
+    var ourDay = today.getDay();
+    if (ourDay < id) {
+        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(id-ourDay), hour, min); 
+    } else if (ourDay == id) {
+        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hour, min);
+    } else {
+        var next = new Date(today.getFullYear(), today.getMonth(), today.getDate()+(7-(ourDay-id)), hour, min);
+    }    
+    var formatter = new Intl.DateTimeFormat("en-US", {
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+    });
+    return formatter.format(next);
+}
+
+
+
 
 var chooseLang = confirm('Show schedule in English?');
 
