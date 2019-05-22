@@ -42,15 +42,15 @@ if (chooseLang === false) {
     for (var i=0; i<schedule.length; i++) {
         htmlUaOutput(schedule[i]);
     }
-     $('#lang').on('click', enLang);
+    //$('#lang').on('click', enLang);
 } else {
     for (var i=0; i<schedule.length; i++) {
         htmlEnOutput(schedule[i]);
     }
-     $('#lang').on('click', uaLang);
+    //$('#lang').on('click', uaLang);
 }
 
-function uaLang() {
+/*function uaLang() {
     $('.enHead:first').addClass('hide');
     $('tbody:first > tr').remove();
     for (var i=0; i<schedule.length; i++) {
@@ -68,4 +68,4 @@ function enLang() {
     }
     $('#lang').off('click', enLang);
     $('#lang').on('click', uaLang);
-}
+}*/
